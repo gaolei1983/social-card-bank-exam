@@ -9,7 +9,7 @@
   <style>
     :root,[data-accent="ikb"] {
       --paper: #fafaf8; --ink: #0a0a0a;
-      --grey-1: #f0f0ee; --grey-2: #d4d4d2; --grey-3: #737373;
+      --grey-3: #737373;
       --accent: #002FA7; --accent-on: #ffffff;
     }
     :root {
@@ -19,98 +19,117 @@
     }
     *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #1a1a1a; font-family: var(--sans); color: var(--ink);
+      background: #1a1a1a; font-family: var(--sans);
       -webkit-font-smoothing: antialiased; padding: 64px 32px;
     }
     .sheet { display: flex; flex-direction: column; align-items: center; gap: 48px; }
+
     .poster {
-      position: relative; background: var(--paper); color: var(--ink);
+      position: relative; background: #000; color: #fff;
       overflow: hidden; isolation: isolate;
     }
     .poster.wide { width: 2100px; height: 900px; }
 
-    /* Full-bleed hero */
     .hero-img {
       position: absolute; inset: 0; z-index: 0;
       width: 100%; height: 100%;
       object-fit: cover; object-position: center 55%;
     }
+    /* Stronger overlay for text readability */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
-      background: linear-gradient(160deg,
-        rgba(0,0,0,0.78) 0%,
-        rgba(0,0,0,0.50) 30%,
-        rgba(0,0,0,0.38) 60%,
-        rgba(0,0,0,0.42) 100%);
+      background:
+        linear-gradient(155deg,
+          rgba(0,0,0,0.85) 0%,
+          rgba(0,0,0,0.65) 30%,
+          rgba(0,0,0,0.45) 55%,
+          rgba(0,0,0,0.55) 75%,
+          rgba(0,0,0,0.70) 100%);
     }
 
-    /* Content: all left-aligned, vertical stack filling width */
+    /* Content: grid, two-column but tight */
     .content {
       position: relative; z-index: 2;
       width: 100%; height: 100%;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 100px 200px;
-      color: #ffffff;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto;
+      align-content: center;
+      padding: 80px 180px;
+      gap: 0 80px;
     }
+
+    /* Grid area assignments */
+    .num-block {
+      grid-column: 1; grid-row: 1 / 4;
+      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    }
+    .title-block { grid-column: 2; grid-row: 1; }
+    .rule-block  { grid-column: 2; grid-row: 2; }
+    .desc-block  { grid-column: 2; grid-row: 3; }
 
     /* Typography */
-    .h-hero {
-      font-family: var(--sans); font-weight: 200; font-size: 148px;
-      line-height: 1.04; letter-spacing: -.01em; color: #ffffff;
-    }
     .num-mega {
       font-family: var(--sans); font-weight: 200;
-      font-size: 280px;
-      line-height: .90; letter-spacing: -.02em;
-      color: #ffffff;
+      font-size: 320px;
+      line-height: .88; letter-spacing: -.03em;
+      color: var(--accent);
+      /* ensure no clipping */
+      padding: 20px 0;
+      margin: -20px 0;
+    }
+    .num-label {
+      font-family: var(--sans); font-weight: 600; font-size: 28px;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--accent);
+    }
+    .h-hero {
+      font-family: var(--sans); font-weight: 200; font-size: 172px;
+      line-height: 1.04; letter-spacing: -.01em; color: #ffffff;
     }
     .lead {
-      font-family: var(--sans-zh); font-weight: 400; font-size: 34px;
-      line-height: 1.5; color: rgba(255,255,255,0.85);
-    }
-    .t-cat {
-      font-family: var(--sans); font-weight: 600; font-size: 24px;
-      letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+      font-family: var(--sans-zh); font-weight: 400; font-size: 36px;
+      line-height: 1.45; color: rgba(255,255,255,0.88);
+      max-width: 720px;
     }
     .t-meta {
-      font-family: var(--mono); font-weight: 500; font-size: 18px;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.50);
+      font-family: var(--mono); font-weight: 500; font-size: 20px;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 24px;
     }
-
-    .row { display: flex; flex-direction: row; align-items: baseline; }
-    .gap-6 { gap: 24px; } .gap-7 { gap: 32px; } .gap-8 { gap: 40px; }
-
     .hr-accent {
       border: none; height: 3px; background: var(--accent);
-      width: 160px; margin: 12px 0;
+      width: 200px; margin: 20px 0;
     }
   </style>
 </head>
 <body>
 <main class="sheet">
 
-  <!-- subject-map: photo at center 55% — desk with books/laptop in middle band.
-       Text placed in lower-left safe zone, sky/upper area as breathing room. -->
   <section class="poster wide" id="wechat-cover">
     <img class="hero-img" src="assets/study-desk.jpg" alt="深夜书桌"
          style="object-position:center 55%">
     <div class="hero-overlay"></div>
 
     <div class="content">
-      <!-- Top row: category + countdown inline -->
-      <div class="row gap-7" style="align-items:baseline;">
-        <p class="t-cat">倒 计 时</p>
+      <!-- LEFT: countdown block -->
+      <div class="num-block">
+        <p class="num-label">倒&nbsp;计&nbsp;时</p>
         <p class="num-mega">100</p>
-        <p class="t-cat">天</p>
+        <p class="num-label">天</p>
       </div>
 
-      <!-- Bottom row: title + motivation + meta -->
-      <h1 class="h-hero">银行考编</h1>
-      <hr class="hr-accent">
-      <div class="row gap-8" style="align-items:baseline;">
+      <!-- RIGHT: title + desc -->
+      <div class="title-block">
+        <h1 class="h-hero">银行考编</h1>
+      </div>
+      <div class="rule-block">
+        <hr class="hr-accent">
+      </div>
+      <div class="desc-block">
         <p class="lead">每一天的坚持，都是在为上岸铺路</p>
-        <p class="t-meta">2026 银行秋招  ·  你一定行</p>
+        <p class="t-meta">2026 银行秋招 &nbsp;·&nbsp; 你一定行</p>
       </div>
     </div>
   </section>
