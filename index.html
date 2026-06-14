@@ -9,7 +9,7 @@
   <style>
     :root,[data-accent="ikb"] {
       --paper: #fafaf8; --ink: #0a0a0a;
-      --grey-3: #737373;
+      --grey-2: #d4d4d2; --grey-3: #737373;
       --accent: #002FA7; --accent-on: #ffffff;
     }
     :root {
@@ -35,72 +35,82 @@
       width: 100%; height: 100%;
       object-fit: cover; object-position: center 55%;
     }
-    /* Stronger overlay for text readability */
     .hero-overlay {
       position: absolute; inset: 0; z-index: 1;
       background:
         linear-gradient(155deg,
-          rgba(0,0,0,0.85) 0%,
-          rgba(0,0,0,0.65) 30%,
-          rgba(0,0,0,0.45) 55%,
-          rgba(0,0,0,0.55) 75%,
-          rgba(0,0,0,0.70) 100%);
+          rgba(0,0,0,0.88) 0%,
+          rgba(0,0,0,0.68) 25%,
+          rgba(0,0,0,0.50) 50%,
+          rgba(0,0,0,0.58) 75%,
+          rgba(0,0,0,0.74) 100%);
     }
 
-    /* Content: grid, two-column but tight */
+    /* Content: grid 3-column: [100] [divider] [title+desc+keywords] */
     .content {
       position: relative; z-index: 2;
       width: 100%; height: 100%;
       display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-rows: auto auto auto;
+      grid-template-columns: auto auto 1fr;
       align-content: center;
-      padding: 80px 180px;
-      gap: 0 80px;
+      padding: 80px 200px;
+      gap: 0 60px;
     }
 
-    /* Grid area assignments */
     .num-block {
-      grid-column: 1; grid-row: 1 / 4;
-      display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      gap: 8px;
     }
-    .title-block { grid-column: 2; grid-row: 1; }
-    .rule-block  { grid-column: 2; grid-row: 2; }
-    .desc-block  { grid-column: 2; grid-row: 3; }
+    .divider {
+      width: 3px; background: var(--accent);
+      align-self: stretch; margin: 40px 0; border-radius: 2px;
+    }
+    .text-block {
+      display: flex; flex-direction: column; justify-content: center;
+      gap: 16px;
+    }
 
     /* Typography */
     .num-mega {
       font-family: var(--sans); font-weight: 200;
-      font-size: 320px;
-      line-height: .88; letter-spacing: -.03em;
+      font-size: 300px;
+      line-height: .86; letter-spacing: -.03em;
       color: var(--accent);
-      /* ensure no clipping */
-      padding: 20px 0;
-      margin: -20px 0;
+      padding: 20px 0; margin: -20px 0;
     }
     .num-label {
       font-family: var(--sans); font-weight: 600; font-size: 28px;
-      letter-spacing: .16em; text-transform: uppercase;
-      color: var(--accent);
+      letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
     }
     .h-hero {
-      font-family: var(--sans); font-weight: 200; font-size: 172px;
+      font-family: var(--sans); font-weight: 200; font-size: 168px;
       line-height: 1.04; letter-spacing: -.01em; color: #ffffff;
     }
     .lead {
-      font-family: var(--sans-zh); font-weight: 400; font-size: 36px;
-      line-height: 1.45; color: rgba(255,255,255,0.88);
-      max-width: 720px;
+      font-family: var(--sans-zh); font-weight: 400; font-size: 34px;
+      line-height: 1.45; color: rgba(255,255,255,0.85);
     }
     .t-meta {
       font-family: var(--mono); font-weight: 500; font-size: 20px;
       letter-spacing: .12em; text-transform: uppercase;
       color: rgba(255,255,255,0.45);
-      margin-top: 24px;
     }
     .hr-accent {
       border: none; height: 3px; background: var(--accent);
-      width: 200px; margin: 20px 0;
+      width: 160px; margin: 4px 0;
+    }
+
+    /* Right-side keyword pills */
+    .kw-row {
+      display: flex; flex-direction: row; gap: 24px; margin-top: 16px;
+    }
+    .kw-pill {
+      display: flex; align-items: center; justify-content: center;
+      padding: 14px 40px;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      font-family: var(--sans-zh); font-weight: 400; font-size: 30px;
+      color: rgba(255,255,255,0.80);
+      letter-spacing: .04em;
     }
   </style>
 </head>
@@ -113,22 +123,26 @@
     <div class="hero-overlay"></div>
 
     <div class="content">
-      <!-- LEFT: countdown block -->
+      <!-- COL 1: countdown -->
       <div class="num-block">
         <p class="num-label">倒&nbsp;计&nbsp;时</p>
         <p class="num-mega">100</p>
         <p class="num-label">天</p>
       </div>
 
-      <!-- RIGHT: title + desc -->
-      <div class="title-block">
+      <!-- COL 2: divider -->
+      <div class="divider"></div>
+
+      <!-- COL 3: everything else -->
+      <div class="text-block">
         <h1 class="h-hero">银行考编</h1>
-      </div>
-      <div class="rule-block">
         <hr class="hr-accent">
-      </div>
-      <div class="desc-block">
         <p class="lead">每一天的坚持，都是在为上岸铺路</p>
+        <div class="kw-row">
+          <span class="kw-pill">刷题</span>
+          <span class="kw-pill">模考</span>
+          <span class="kw-pill">复盘</span>
+        </div>
         <p class="t-meta">2026 银行秋招 &nbsp;·&nbsp; 你一定行</p>
       </div>
     </div>
